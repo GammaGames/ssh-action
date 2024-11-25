@@ -69,8 +69,12 @@ echo "======= CLI Version ======="
 sh -c "${TARGET} --version" # print version
 echo "==========================="
 if [[ "$INPUT_CAPTURE_STDOUT" == 'true' ]]; then
+  {
+    sh -c "${TARGET} $*" # run the command
+  } | tee /tmp/stdout
+
   echo 'stdout<<EOF' >> $GITHUB_OUTPUT # use heredoc for multiline output
-  sh -c "${TARGET} $*" >> $GITHUB_OUTPUT # run the command
+  cat /tmp/stdout >> $GITHUB_OUTPUT
   echo 'EOF' >> $GITHUB_OUTPUT
 else
   sh -c "${TARGET} $*" # run the command
