@@ -1,4 +1,4 @@
-name: testing main branch
+name: testing current branch
 
 on: [push]
 
